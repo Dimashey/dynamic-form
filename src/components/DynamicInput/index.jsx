@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './index.module.css'
 
 export const DynamicInput = ({
   index,
@@ -13,10 +14,17 @@ export const DynamicInput = ({
   const onChange = (e) => handleChange(e, index)
 
   return (
-    <div>
-      <input type="text" value={value} onChange={onChange} />
-      <button onClick={add}>+</button>
-      {canRemove && <button onClick={remove}>-</button>}
+    <div className={styles.InputContainer}>
+      <input
+        className={styles.Input}
+        type="text"
+        value={value}
+        onChange={onChange}
+      />
+      <button className={styles.Button} onClick={add}>
+        +
+      </button>
+      {canRemove && <button className={styles.Button} onClick={remove}>-</button>}
     </div>
   )
 }
