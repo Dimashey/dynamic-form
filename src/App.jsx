@@ -1,41 +1,30 @@
-import React, { useCallback, useState } from 'react'
-import './App.css'
-import { append, remove } from './utils'
-import { DynamicInput } from './components/DynamicInput'
+import React from 'react';
+import './App.css';
+import { DynamicInput } from './components/DynamicInput';
+import { useFormArray } from './hooks/useFormArray';
+
+const FIRST_INDEX = 0;
 
 function App() {
-  const [fields, setFields] = useState([''])
-
-  const handleChange = useCallback((e, i) => {
-    setFields((prevState) => {
-      const newState = [...prevState]
-      newState[i] = e.target.value
-      return newState
-    })
-  }, [])
-
-  const addElement = useCallback((i) => {
-    setFields((prevState) => append(prevState, i, ''))
-  }, [])
-
-  const removeElement = useCallback((i) => {
-    setFields((prevState) => remove(prevState, i))
-  }, [])
+  const { fields, handleChange, removeElement, addElement } = useFormArray();
 
   return (
     <div className="App">
-      {fields.map((v, i) => (
-        <DynamicInput
-          value={v}
-          addElement={addElement}
-          removeElement={removeElement}
-          handleChange={handleChange}
-          index={i}
-          canRemove={i !== 0}
-        />
-      ))}
+      {fields.map((value, index) => {
+        return (
+          <DynamicInput
+            key={index}
+            value={value}
+            addElement={addElement}
+            removeElement={removeElement}
+            handleChange={handleChange}
+            index={index}
+            canRemove={index !== FIRST_INDEX}
+          />
+        );
+      })}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
