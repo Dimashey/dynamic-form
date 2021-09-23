@@ -1,30 +1,36 @@
-import React from 'react'
-import styles from './index.module.css'
+import React, { memo } from 'react';
+import styles from './index.module.css';
 
-export const DynamicInput = ({
-  index,
-  addElement,
-  removeElement,
-  handleChange,
-  value,
-  canRemove = false,
-}) => {
-  const add = () => addElement(index)
-  const remove = () => removeElement(index)
-  const onChange = (e) => handleChange(e, index)
+export const DynamicInput = memo(
+  ({
+    index,
+    addElement,
+    removeElement,
+    handleChange,
+    value,
+    canRemove = false,
+  }) => {
+    const addItem = () => addElement(index);
+    const removeItem = () => removeElement(index);
+    const onChange = (e) => handleChange(e, index);
 
-  return (
-    <div className={styles.InputContainer}>
-      <input
-        className={styles.Input}
-        type="text"
-        value={value}
-        onChange={onChange}
-      />
-      <button className={styles.Button} onClick={add}>
-        +
-      </button>
-      {canRemove && <button className={styles.Button} onClick={remove}>-</button>}
-    </div>
-  )
-}
+    return (
+      <div className={styles.InputContainer}>
+        <input
+          className={styles.Input}
+          type="text"
+          value={value}
+          onChange={onChange}
+        />
+        <button className={styles.Button} onClick={addItem}>
+          +
+        </button>
+        {canRemove && (
+          <button className={styles.Button} onClick={removeItem}>
+            -
+          </button>
+        )}
+      </div>
+    );
+  }
+);
